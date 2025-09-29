@@ -14,9 +14,9 @@ import java.util.List;
 public class BookIssueController {
     @Autowired
     StudentService studentService;
-
-    @GetMapping("/students")
-    public List<Student> getStudents(){
-        return studentService.getStudents();
-    }
+//
+//    @GetMapping("/students")
+//    public List<Student> getStudents(){
+//        return studentService.getStudents();
+//    }
 }
