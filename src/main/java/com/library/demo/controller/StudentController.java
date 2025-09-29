@@ -1,6 +1,7 @@
 package com.library.demo.controller;
 
 import com.library.demo.dto.Student;
+import com.library.demo.entity.StudentEntity;
 import com.library.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,28 +16,23 @@ import java.util.List;
 @RequestMapping("/api/v1/student")
 public class StudentController {
     @Autowired
-    StudentService sc;
-    @Value("${env}")
-    private String props;
+    private StudentService sc;
 
-    @GetMapping("/props")
-    public String getProps(){
-        return props;
-    }
-
-
-    static List<Student> students = new ArrayList<>();
-    static{
-        students.add(new Student(1,"Vinay"));
-    }
     @GetMapping
-    public ResponseEntity<List<Student>> getStudent(){
+    public ResponseEntity<List<StudentEntity>> getStudent(){
         return ResponseEntity.ok(sc.getStudents());
     }
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student student){
-        students.add(student);
+    public ResponseEntity<StudentEntity> addStudent(@RequestBody StudentEntity student){
+        sc.saveStudent(student);
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
-
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentEntity> getStudent(@PathVariable("id")  Integer id){
+        return new ResponseEntity<>(sc.getStudent(id),HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentEntity> updated(@PathVariable("id")  Integer id,@RequestBody StudentEntity student){
+        return new ResponseEntity<>(sc.updateStudent(id,student),HttpStatus.OK);
+    }
 }
