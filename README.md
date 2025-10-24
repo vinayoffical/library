@@ -1,3 +1,2 @@
 # library
-Demo Project for library
-Testing the changes
+Testing the pull command
